@@ -8,22 +8,13 @@
 }
 
 :root {
-    /* Primary color variables */
-    /* --background-color: #f9fff5; page background */
-    /* --header-bg: #bad5ad;        header background */
-    /* --nav-hover: #a1a1a1;        nav link hover/bg */
-    /* --post-bg: #f5f6e2;          post card background */
-    /* --accent: #aad4c1;           accent / shadows */
-    /* --muted: #a2a2a2;            muted elements (badges) */
-    /* --background-color: #FFFDF6; */
     --background-color: rgb(246, 247, 250);
     --header-bg: #bcd8f6;
-    --post-bg: #FAF6E9;
-    --accent: #A0C878;
+    
+    --post-bg: white;
     --muted: #FAF6E9;
     
-    --shadow-color: rgba(0, 0, 0, 0.35); /* generic shadow */
-    /* read-more button sizing used to reserve space inside post cards */
+    --shadow-color: rgba(0, 0, 0, 0.35); 
     --read-more-height: 3rem;
     --read-more-gap: 0.5rem;
 }
@@ -35,7 +26,6 @@ body {
 }
 header {
     background-color: var(--header-bg);
-    /* width: 100%; */
 }
 nav {
   display: flex;
@@ -131,8 +121,6 @@ nav > ul {
     background-color: white;
     border-radius: 10px;
     padding: 1.5rem;
-    /* box-shadow: 0 0 1rem rgb(0 0 0 / 0.125); */
-    box-shadow: 1px solid rgba(24, 28, 33, .06);
 }
 .post-card {
     display: flex;
@@ -144,7 +132,7 @@ nav > ul {
     padding: 1.5rem;
     border-radius: 10px;
     /* box-shadow: 0 0 1rem rgb(0 0 0 / 0.125); */
-    box-shadow: 1px solid rgba(24, 28, 33, .06);
+    /* box-shadow: 1px 0px rgba(24, 28, 33, .06); */
 }
 
 main {
@@ -180,16 +168,28 @@ main {
     border-radius: 10px;
     margin-top: 1rem;
     justify-content: end;
-    background-color: var(--muted);
+    background-color: var(--header-bg);
     width: fit-content;
-    border:1px solid black;
-    display: inline-flex;
     align-items: center;
     height: var(--read-more-height);
+    transition: none;
 }
-.read-more-button:hover, .read-more-button:focus, .read-more-button:active {
-    background-color: var(--header-bg);
-    border-color: #111111;
+
+.read-more-button:hover,
+.read-more-button:focus,
+.read-more-button:active {
+    background-color: #74b7ff;
+    transition: background-color 0.32s ease;
+}
+
+.about-container {
+    margin: 1rem;
+    height: 80svh;
+    width: min(900px, 90%);
+}
+
+.full-height {
+    height: 100%;
 }
 /* small tablets / large phones */
 @media (min-width: 600px) {

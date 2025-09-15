@@ -1,0 +1,15 @@
+.breadcrumbs-container {
+    display: block;
+    /* background-color: #F2F2F2; */
+    /* background-color: white; */
+    padding: 0.5rem;
+}
+
+.breadcrumbs {
+    display: flex;
+    border-radius: 1000vh;
+    width: fit-content;
+    /* margin: 1rem; */
+    padding: 0.7rem;
+    /* background-color: var(--header-bg); */
+}
