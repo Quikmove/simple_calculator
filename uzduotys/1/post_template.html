@@ -1,50 +1,64 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Postas – Šablonas</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="post.css">
-    <title>Postas</title>
-    <style></style>
+    <link rel="stylesheet" href="post.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
       <nav class="nav-container">
         <ul>
           <li class="list-item">
-            <a href="index.html" class="nav-link">
+            <a href="index.html" class="link nav-link">
               <span class="invisible-label">Blog'as</span>
-              <span class="label">Blog'as</span></a
-            >
+              <span class="label">Blog'as</span></a>
           </li>
           <li class="list-item">
-            <a href="about.html" class="nav-link">
+            <a href="about.html" class="link nav-link">
               <span class="invisible-label">Apie</span>
-              <span class="label">Apie</span></a
-            >
+              <span class="label">Apie</span></a>
           </li>
           <li class="list-item">
-            <a href="contact.html" class="nav-link">
-              <span class="invisible-label"
-                >Susisiekti</span
-              >
-              <span class="label">Susisiekti</span></a
-            >
+            <a href="contact.html" class="link nav-link">
+              <span class="invisible-label">Susisiekti</span>
+              <span class="label">Susisiekti</span></a>
           </li>
         </ul>
       </nav>
     </header>
+
     <div class="breadcrumbs-container">
       <div class="breadcrumbs">
         <a href="index.html">Blog'as</a>
-        <span>></span>
-        <a href="">Postas</a>
+        <span>›</span>
+        <span aria-current="page">Posto pavadinimas</span>
       </div>
     </div>
+
     <main>
-      <div class="card full-height">
-        aaaaaa
-      </div>
+      <article class="card">
+        <figure class="photo-captioned">
+          <img src="assets/78pdrd.webp" alt="Hero nuotrauka" />
+          <figcaption class="photo-credit"><span class="caption">Autorius</span></figcaption>
+        </figure>
+        <h1>Posto pavadinimas</h1>
+        <span class="time-cat">
+          <time datetime="2025-09-01">Rugsėjo 1</time>
+        </span>
+        <p>
+          Čia pateikiamas įrašo turinys. Naudokite pastraipas, paveikslėlius,
+          sąrašus ir kt.
+        </p>
+      </article>
     </main>
   </body>
-</html>
+  </html>

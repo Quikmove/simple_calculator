@@ -185,7 +185,7 @@ main {
 .about-container {
     margin: 1rem;
     height: 80svh;
-    width: min(900px, 90%);
+    width: min(960px, 90%);
 }
 
 .full-height {
