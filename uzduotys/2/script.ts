@@ -24,7 +24,7 @@ let unaryOps: UnaryRegistry = {
   abs: new AbsOperation(),
   sqr: new SquareOperation(),
 };
-let binaryOpsSymbolMap: Record<string, string> = {
+let binaryOpsMap: Record<string, string> = {
   add: "+",
   subtract: "-",
   multiply: "x",
@@ -38,36 +38,35 @@ const rightDisplayElement =
 const operatorElement = document.querySelector<HTMLSpanElement>("#operator")!;
 
 function updateDisplay(s: CalcState) {
-  if(s.prev) {
+  if (s.prev) {
     leftDisplayElement.value = s.prev;
     rightDisplayElement.value = s.curr;
-
-  }
-  else {
+  } else {
     leftDisplayElement.value = s.curr;
-    rightDisplayElement.value = '';
+    rightDisplayElement.value = "";
   }
-  operatorElement.innerText = s.operator ?? "";
+  if (s.operator && s.operator != "")
+    operatorElement.innerText = binaryOpsMap[s.operator];
+  else operatorElement.innerText = "";
 }
 
 let calc = new Calculator({
   binaryOps,
   unaryOps,
 });
-const cancel = calc.onChange(updateDisplay);
+
+calc.onChange(updateDisplay);
+
 const keyboard = document.querySelector<HTMLDivElement>(".keyboard");
 const numButtons = keyboard?.querySelectorAll<HTMLButtonElement>(
   "button[data-number]"
-);
-const constantsButtons = keyboard?.querySelectorAll<HTMLButtonElement>(
-  "button[data-constant]"
 );
 const binaryButtons = keyboard?.querySelectorAll<HTMLButtonElement>(
   "button[data-binary]"
 );
 binaryButtons?.forEach((bt) => {
   bt.addEventListener("click", (ev) => {
-    calc.dispatch({type:'binary', key: bt.dataset.key!});
+    calc.dispatch({ type: "binary", key: bt.dataset.key! });
   });
 });
 const unaryButtons =
@@ -75,7 +74,7 @@ const unaryButtons =
 
 unaryButtons?.forEach((bt) => {
   bt.addEventListener("click", (ev) => {
-    calc.dispatch({type:'unary', key: bt.dataset.key!})
+    calc.dispatch({ type: "unary", key: bt.dataset.key! });
   });
 });
 const equalsButton = keyboard?.querySelector<HTMLButtonElement>(
@@ -103,6 +102,6 @@ numButtons?.forEach((bt) => {
   // const number: number = Number.parseInt(bt.dataset.key!);
   bt.addEventListener("click", (_) => {
     console.log("pressed a num button");
-    calc.dispatch({type: 'num', key: bt.dataset.key!})
+    calc.dispatch({ type: "num", key: bt.dataset.key! });
   });
 });
