@@ -31,23 +31,23 @@ let binaryOpsMap: Record<string, string> = {
   divide: "/",
   pow: "^",
 };
-const leftDisplayElement =
-  document.querySelector<HTMLInputElement>("#left-display")!;
-const rightDisplayElement =
-  document.querySelector<HTMLInputElement>("#right-display")!;
-const operatorElement = document.querySelector<HTMLSpanElement>("#operator")!;
+const previousOperand =
+  document.querySelector<HTMLDivElement>(".previous-operand")!;
+const currentOperand =
+  document.querySelector<HTMLDivElement>(".current-operand")!;
+
 
 function updateDisplay(s: CalcState) {
   if (s.prev) {
-    leftDisplayElement.value = s.prev;
-    rightDisplayElement.value = s.curr;
+    previousOperand.innerText = s.prev;
+    currentOperand.innerText= s.curr;
   } else {
-    leftDisplayElement.value = s.curr;
-    rightDisplayElement.value = "";
+    currentOperand.innerText = s.curr;
+    previousOperand.innerText = "";
   }
   if (s.operator && s.operator != "")
-    operatorElement.innerText = binaryOpsMap[s.operator];
-  else operatorElement.innerText = "";
+    previousOperand.dataset.operator = binaryOpsMap[s.operator];
+  else previousOperand.dataset.operator = "";
 }
 
 let calc = new Calculator({
@@ -56,12 +56,10 @@ let calc = new Calculator({
 });
 
 calc.onChange(updateDisplay);
-
-const keyboard = document.querySelector<HTMLDivElement>(".keyboard");
-const numButtons = keyboard?.querySelectorAll<HTMLButtonElement>(
+const numButtons = document?.querySelectorAll<HTMLButtonElement>(
   "button[data-number]"
 );
-const binaryButtons = keyboard?.querySelectorAll<HTMLButtonElement>(
+const binaryButtons = document?.querySelectorAll<HTMLButtonElement>(
   "button[data-binary]"
 );
 binaryButtons?.forEach((bt) => {
@@ -70,38 +68,36 @@ binaryButtons?.forEach((bt) => {
   });
 });
 const unaryButtons =
-  keyboard?.querySelectorAll<HTMLButtonElement>("button[data-unary]");
-
+  document?.querySelectorAll<HTMLButtonElement>("button[data-unary]");
+console.log('yello')
 unaryButtons?.forEach((bt) => {
   bt.addEventListener("click", (ev) => {
     calc.dispatch({ type: "unary", key: bt.dataset.key! });
   });
 });
-const equalsButton = keyboard?.querySelector<HTMLButtonElement>(
+const equalsButton = document?.querySelector<HTMLButtonElement>(
   "button[data-equals]"
 );
 equalsButton?.addEventListener("click", (ev) =>
   calc.dispatch({ type: "equals" })
 );
-const allClearButton = keyboard?.querySelector<HTMLButtonElement>(
+const allClearButton = document?.querySelector<HTMLButtonElement>(
   "button[data-all-clear]"
 );
 allClearButton?.addEventListener("click", (ev) =>
   calc.dispatch({ type: "clear" })
 );
-const delButton = keyboard?.querySelector<HTMLButtonElement>(
+const delButton = document?.querySelector<HTMLButtonElement>(
   "button[data-delete]"
 );
 delButton?.addEventListener("click", (ev) => {
   calc.dispatch({ type: "delete" });
 });
 const dotButton =
-  keyboard?.querySelector<HTMLButtonElement>("button[data-dot]");
+  document?.querySelector<HTMLButtonElement>("button[data-dot]");
 dotButton?.addEventListener("click", (ev) => calc.dispatch({ type: "dot" }));
 numButtons?.forEach((bt) => {
-  // const number: number = Number.parseInt(bt.dataset.key!);
   bt.addEventListener("click", (_) => {
-    console.log("pressed a num button");
     calc.dispatch({ type: "num", key: bt.dataset.key! });
   });
 });

@@ -82,27 +82,31 @@ export class Calculator {
         break;
       }
       case "delete": {
-        if (this.state.waitingForNew) {
-          if (this.state.curr === "" && this.state.prev !== "") {
-            this.state.curr = this.state.prev;
-            this.state.prev = "";
-            this.state.operator = null;
-            this.state.waitingForNew = false;
-          } else {
-            this.state.curr = "";
-            this.state.waitingForNew = false;
-          }
-        } else {
+        console.log();
+        if (this.state.curr !== "") {
           this.state.curr = this.state.curr.slice(0, -1) || "";
+          if (this.state.curr === "") this.state.waitingForNew = true;
+        } else if (this.state.waitingForNew && this.state.prev !== "") {
+          this.state.curr = this.state.prev;
+          this.state.prev = "";
+          this.state.operator = null;
+          this.state.waitingForNew = false;
         }
         break;
       }
       case "unary": {
-        if (typeof action.key === "string") this.applyUnary(action.key);
+        if (typeof action.key !== "string") return;
+        if (this.state.curr !== "" || this.state.prev !== "")
+          this.applyUnary(action.key);
         break;
       }
       case "binary": {
-        if (typeof action.key === "string") this.setOperator(action.key);
+        if (typeof action.key !== "string") return;
+        if (action.key === "subtract" && this.state.curr == "") {
+          this.state.curr = "-";
+          this.state.waitingForNew = false;
+        } else if ((this.state.curr !== "" && this.state.curr !== "-") || this.state.prev !== "")
+          this.setOperator(action.key);
         break;
       }
       case "equals": {
@@ -145,6 +149,8 @@ export class Calculator {
       this.state.curr !== ""
     ) {
       this.calculate();
+      this.state.prev = this.state.curr;
+      this.state.curr = "";
       this.state.operator = opKey;
       this.state.waitingForNew = true;
       return;
