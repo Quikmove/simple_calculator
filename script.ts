@@ -36,11 +36,10 @@ const previousOperand =
 const currentOperand =
   document.querySelector<HTMLDivElement>(".current-operand")!;
 
-
 function updateDisplay(s: CalcState) {
   if (s.prev) {
     previousOperand.innerText = s.prev;
-    currentOperand.innerText= s.curr;
+    currentOperand.innerText = s.curr;
   } else {
     currentOperand.innerText = s.curr;
     previousOperand.innerText = "";
@@ -56,48 +55,54 @@ let calc = new Calculator({
 });
 
 calc.onChange(updateDisplay);
+
 const numButtons = document?.querySelectorAll<HTMLButtonElement>(
-  "button[data-number]"
+  "button[data-number]",
 );
+numButtons?.forEach((bt) => {
+  bt.addEventListener("click", (_) => {
+    calc.dispatch({ type: "num", key: bt.dataset.key! });
+  });
+});
+
 const binaryButtons = document?.querySelectorAll<HTMLButtonElement>(
-  "button[data-binary]"
+  "button[data-binary]",
 );
 binaryButtons?.forEach((bt) => {
   bt.addEventListener("click", (ev) => {
     calc.dispatch({ type: "binary", key: bt.dataset.key! });
   });
 });
+
 const unaryButtons =
   document?.querySelectorAll<HTMLButtonElement>("button[data-unary]");
-console.log('yello')
 unaryButtons?.forEach((bt) => {
   bt.addEventListener("click", (ev) => {
     calc.dispatch({ type: "unary", key: bt.dataset.key! });
   });
 });
+
 const equalsButton = document?.querySelector<HTMLButtonElement>(
-  "button[data-equals]"
+  "button[data-equals]",
 );
 equalsButton?.addEventListener("click", (ev) =>
-  calc.dispatch({ type: "equals" })
+  calc.dispatch({ type: "equals" }),
 );
+
 const allClearButton = document?.querySelector<HTMLButtonElement>(
-  "button[data-all-clear]"
+  "button[data-all-clear]",
 );
 allClearButton?.addEventListener("click", (ev) =>
-  calc.dispatch({ type: "clear" })
+  calc.dispatch({ type: "clear" }),
 );
+
 const delButton = document?.querySelector<HTMLButtonElement>(
-  "button[data-delete]"
+  "button[data-delete]",
 );
 delButton?.addEventListener("click", (ev) => {
   calc.dispatch({ type: "delete" });
 });
+
 const dotButton =
   document?.querySelector<HTMLButtonElement>("button[data-dot]");
 dotButton?.addEventListener("click", (ev) => calc.dispatch({ type: "dot" }));
-numButtons?.forEach((bt) => {
-  bt.addEventListener("click", (_) => {
-    calc.dispatch({ type: "num", key: bt.dataset.key! });
-  });
-});

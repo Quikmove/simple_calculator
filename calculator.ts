@@ -1,4 +1,4 @@
-import { InvalidOperationError, OperationNotFoundError } from "./errors.js";
+import { OperationNotFoundError } from "./errors.js";
 import {
   UnaryOperation,
   BinaryOperation,
@@ -33,11 +33,11 @@ export class Calculator {
   constructor(deps: { unaryOps?: UnaryRegistry; binaryOps?: BinaryRegistry }) {
     if (deps.unaryOps)
       Object.entries(deps.unaryOps).forEach(([k, v]) =>
-        this.registerUnary(k, v)
+        this.registerUnary(k, v),
       );
     if (deps.binaryOps)
       Object.entries(deps.binaryOps).forEach(([k, v]) =>
-        this.registerBinary(k, v)
+        this.registerBinary(k, v),
       );
   }
   getState(): CalcState {
@@ -105,7 +105,10 @@ export class Calculator {
         if (action.key === "subtract" && this.state.curr == "") {
           this.state.curr = "-";
           this.state.waitingForNew = false;
-        } else if ((this.state.curr !== "" && this.state.curr !== "-") || this.state.prev !== "")
+        } else if (
+          (this.state.curr !== "" && this.state.curr !== "-") ||
+          this.state.prev !== ""
+        )
           this.setOperator(action.key);
         break;
       }
@@ -189,15 +192,17 @@ export class Calculator {
     } else if (typeof x === "bigint") {
       n = Number(x);
     } else if (typeof x === "string" && x.trim() !== "") {
-      n = Number(x);
+      if (x === "Infinity") n = Infinity;
+      else if (x === "-Infinity") n = -Infinity;
+      else n = Number(x);
     } else {
       throw new TypeError(
-        `Argument "${label}" must be a number or bigint, got ${typeof x}`
+        `Argument "${label}" must be a number or bigint, got ${typeof x}`,
       );
     }
     if (!Number.isFinite(n)) {
       throw new TypeError(
-        `Argument "${label}" must be a finite number, got ${x}`
+        `Argument "${label}" must be a finite number, got ${x}`,
       );
     }
     return n;
