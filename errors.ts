@@ -21,3 +21,10 @@ export class DivisionByZeroError extends Error {
     this.name = "DivisionByZeroError";
   }
 }
+
+export class OutOfBoundsError extends Error {
+  constructor() {
+    super("Out of bounds");
+    this.name = "OutOfBoundsError";
+  }
+}
