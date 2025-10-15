@@ -7,6 +7,12 @@
 * {
   margin: 0;
 }
+@property --percent {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 html,
 body,
 .calculator {
@@ -74,7 +80,19 @@ button {
   aspect-ratio: 1/1;
 }
 body {
-  background: linear-gradient(to right, #59e3ffb8, #60ebc46a, #c4fc646a);
+  --percent: 0deg;
+  background: linear-gradient(var(--percent), #59e3ffb8, #60ebc46a, #c4fc646a);
+  animation: spinBackground 30s linear infinite;
+  animation-play-state: running;
+}
+@keyframes spinBackground {
+  from {
+    --percent: 0deg;
+  }
+  to {
+    --percent: 360deg;
+  }
+  
 }
 /* .calculator .btn[data-binary],
 .calculator .btn[data-unary] {
@@ -115,6 +133,9 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
+  body {
+    animation-play-state: paused;
+  }
   .calculator {
     width: 100dvw;
     height: 100dvh;
