@@ -12,13 +12,6 @@
   inherits: false;
   initial-value: 0deg;
 }
-
-html,
-body,
-.calculator {
-  touch-action: manipulation;
-  -webkit-user-drag: none;
-}
 body {
   height: 100%;
   display: grid;
@@ -42,6 +35,10 @@ button {
   background-color: hsl(0 0 0 / 0.3);
   word-wrap: break-word;
   word-break: break-all;
+
+  overflow-x: auto;
+  text-overflow: ellipsis;
+  white-space: initial;
 }
 .calculator .previous-operand {
   color: rgba(255, 255, 255, 0.75);
@@ -60,13 +57,20 @@ button {
   grid-column: span 2;
   aspect-ratio: unset !important;
 }
-.calculator {
-  background-color: hsl(0, 0%, 75%);
-  padding: 0.5rem;
+.calculator .keyboard {
   display: grid;
   gap: 0.125rem;
   grid-template-columns: repeat(5, min(7rem, 15vw));
-  grid-template-rows: minmax(7rem, auto) repeat(5, min(7rem, 15vw));
+  grid-template-rows: repeat(5, min(7rem, 15vw));
+}
+.calculator {
+  background-color: hsl(0, 0%, 75%);
+  padding: 0.5rem;
+  gap:0.25rem;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(7rem, auto) 1fr;
 }
 .calculator .btn {
   --alpha: 0.6;
@@ -92,7 +96,7 @@ body {
   to {
     --percent: 360deg;
   }
-  
+
 }
 /* .calculator .btn[data-binary],
 .calculator .btn[data-unary] {
@@ -134,21 +138,39 @@ body {
 
 @media only screen and (max-width: 600px) {
   body {
-    animation-play-state: paused;
-  }
-  .calculator {
+      animation-play-state: paused;
+    }
+    .calculator {
+    display:flex;
+    flex-direction: column;
+
     width: 100dvw;
     height: 100dvh;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    justify-content: center;
+  }
+  .calculator .keyboard {
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: minmax(35dvh, auto) repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    aspect-ratio: 1/1;
+    margin-top: auto;
   }
   .calculator .output {
     justify-content: flex-end;
+    flex-grow: 1;
   }
   .calculator .output .current-operand {
     min-height: 3rem;
   }
   .calculator .btn {
-    height: 100%;
+    aspect-ratio: 1/1;
   }
+  html,
+  body,
+  .calculator {
+      touch-action: manipulation;
+      -webkit-user-drag: none;
+    }
 }
