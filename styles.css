@@ -7,16 +7,31 @@
 * {
   margin: 0;
 }
-@property --percent {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
+
 body {
   height: 100%;
   display: grid;
   justify-items: center;
   align-items: center;
+  background: none;
+  position: relative;
+  overflow: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: -50vmax;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(0deg, #59e3ffb8, #60ebc46a, #c4fc646a);
+  transform-origin: center;
+  will-change: transform;
+  animation: spinBgTransform 30s linear infinite;
+}
+@keyframes spinBgTransform {
+  to {
+    transform: rotate(360deg);
+  }
 }
 /*reset button element*/
 button {
@@ -83,21 +98,7 @@ button {
   height: auto;
   aspect-ratio: 1/1;
 }
-body {
-  --percent: 0deg;
-  background: linear-gradient(var(--percent), #59e3ffb8, #60ebc46a, #c4fc646a);
-  animation: spinBackground 30s linear infinite;
-  animation-play-state: running;
-}
-@keyframes spinBackground {
-  from {
-    --percent: 0deg;
-  }
-  to {
-    --percent: 360deg;
-  }
 
-}
 /* .calculator .btn[data-binary],
 .calculator .btn[data-unary] {
   background-color: rgba(33,150,243, var(--alpha));
@@ -137,10 +138,7 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  body {
-      animation-play-state: paused;
-    }
-    .calculator {
+  .calculator {
     display:flex;
     flex-direction: column;
 
@@ -173,4 +171,7 @@ body {
       touch-action: manipulation;
       -webkit-user-drag: none;
     }
+  body::before {
+    animation-play-state: paused;
+  }
 }
