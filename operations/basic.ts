@@ -37,6 +37,11 @@ export class AbsOperation implements UnaryOperation {
     return Math.abs(a);
   }
 }
+export class InvertSignOperation implements UnaryOperation {
+  execute(a: number): number {
+      return -a;
+  }
+}
 export class SquareOperation implements UnaryOperation {
   execute(a: number): number {
     return a * a;

@@ -1,13 +1,13 @@
 import { CalcState, Calculator } from "./calculator.js";
 import { BinaryRegistry, UnaryRegistry } from "./operations/base.js";
 import {
-  AbsOperation,
   AddOperation,
   DivideOperation,
   MultiplyOperation,
   NaturalLogarithmOperation,
   RaiseToPowerOperation,
   SquareOperation,
+  InvertSignOperation,
   SquareRootOperation,
   SubtractOperation,
 } from "./operations/basic.js";
@@ -21,8 +21,8 @@ let binaryOps: BinaryRegistry = {
 let unaryOps: UnaryRegistry = {
   ln: new NaturalLogarithmOperation(),
   sqrt: new SquareRootOperation(),
-  abs: new AbsOperation(),
   sqr: new SquareOperation(),
+  invert: new InvertSignOperation(),
 };
 let binaryOpsMap: Record<string, string> = {
   add: "+",
