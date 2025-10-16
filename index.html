@@ -10,46 +10,50 @@
 
 <body>
   <main>
-  <h1 class="sr-only">Calculator</h1>
-  <div class="calculator" role="application" aria-label="Calculator">
-    <div class="output" aria-live="polite" aria-atomic="true" aria-readonly="true">
-      <div class="previous-operand" data-operator="*"></div>
-      <div class="current-operand"></div>
+    <h1 class="sr-only">Calculator</h1>
+    <div class="calculator" role="application" aria-label="Calculator">
+      <div class="output" aria-live="polite" aria-atomic="true" aria-readonly="true">
+        <div class="previous-operand" data-operator="*"></div>
+        <div class="current-operand"></div>
+      </div>
+      <div class="keyboard" role="group" a ria-label="Calculator keypad">
+        
+        <button class="btn" data-all-clear type="button" aria-label="all clear"
+        aria-keyshortcuts="Escape">AC</button>
+        <button class="btn" data-delete type="button" aria-label="delete" aria-keyshortcuts="Backspace">del</button>
+        <button class="btn" data-unary data-key="sqrt" type="button" aria-label="square root">√</button>
+        <button class="btn" data-unary data-key="sqr" type="button" aria-label="square">x²</button>
+        <button class="btn" data-binary data-key="pow" type="button" aria-label="raise to power"
+          aria-keyshortcuts="^">xⁿ</button>
+          
+          <button class="btn" data-number data-key="7" type="button" aria-label="seven" aria-keyshortcuts="7">7</button>
+          <button class="btn" data-number data-key="8" type="button" aria-label="eight" aria-keyshortcuts="8">8</button>
+          <button class="btn" data-number data-key="9" type="button" aria-label="nine" aria-keyshortcuts="9">9</button>
+          <button class="btn" data-binary data-key="add" type="button" aria-label="add" aria-keyshortcuts="+">+</button>
+          <button class="btn" data-binary data-key="subtract" type="button" aria-label="subtract">
+            -
+          </button>
+          <button class="btn" data-number data-key="4" type="button" aria-label="four" aria-keyshortcuts="4">4</button>
+          <button class="btn" data-number data-key="5" type="button" aria-label="five" aria-keyshortcuts="5">5</button>
+          <button class="btn" data-number data-key="6" type="button" aria-label="six" aria-keyshortcuts="6">6</button>
+          <button class="btn" data-binary data-key="multiply" type="button" aria-label="multiply" aria-keyshortcuts="*">
+            *
+          </button>
+          <button class="btn" data-binary data-key="divide" type="button" aria-label="divide"
+          aria-keyshortcuts="/">/</button>
+          
+          <button class="btn" data-number data-key="1" type="button" aria-label="one" aria-keyshortcuts="1">1</button>
+          <button class="btn" data-number data-key="2" type="button" aria-label="two" aria-keyshortcuts="2">2</button>
+          <button class="btn" data-number data-key="3" type="button" aria-label="three" aria-keyshortcuts="3">3</button>
+          <button class="btn" data-unary data-key="log2" type="button" aria-label="logarithm base2">log2</button>
+        <button class="btn" data-unary data-key="ln" type="button" aria-label="natural logarithm">ln</button>
+        <button class="btn" data-unary data-key="invert" type="button" aria-label="invert sign">+/-</button>
+        <button class="btn" data-number data-key="0" type="button" aria-label="zero" aria-keyshortcuts="0">0</button>
+        <button class="btn" data-dot type="button" aria-label="decimal" aria-keyshortcuts=","
+          aria-description="Use comma or dot">.</button>
+        <button class="btn span-2" data-equals type="button" aria-label="equals" aria-keyshortcuts="Enter =">=</button>
+      </div>
     </div>
-  <div class="keyboard" role="group" a
-  ria-label="Calculator keypad">
-
-  <button class="btn span-2" data-all-clear type="button" aria-label="all clear" aria-keyshortcuts="Escape">AC</button>
-      <button class="btn" data-unary data-key="sqr" type="button" aria-label="square">x²</button>
-  <button class="btn" data-binary data-key="pow" type="button" aria-label="raise to power" aria-keyshortcuts="^">xⁿ</button>
-  <button class="btn" data-delete type="button" aria-label="delete" aria-keyshortcuts="Backspace">del</button>
-
-  <button class="btn" data-number data-key="7" type="button" aria-label="seven" aria-keyshortcuts="7">7</button>
-  <button class="btn" data-number data-key="8" type="button" aria-label="eight" aria-keyshortcuts="8">8</button>
-  <button class="btn" data-number data-key="9" type="button" aria-label="nine" aria-keyshortcuts="9">9</button>
-  <button class="btn" data-binary data-key="add" type="button" aria-label="add" aria-keyshortcuts="+">+</button>
-      <button class="btn" data-binary data-key="subtract" type="button" aria-label="subtract">
-        -
-      </button>
-  <button class="btn" data-number data-key="4" type="button" aria-label="four" aria-keyshortcuts="4">4</button>
-  <button class="btn" data-number data-key="5" type="button" aria-label="five" aria-keyshortcuts="5">5</button>
-  <button class="btn" data-number data-key="6" type="button" aria-label="six" aria-keyshortcuts="6">6</button>
-      <button class="btn" data-binary data-key="multiply" type="button" aria-label="multiply" aria-keyshortcuts="*">
-        *
-      </button>
-  <button class="btn" data-binary data-key="divide" type="button" aria-label="divide" aria-keyshortcuts="/">/</button>
-
-  <button class="btn" data-number data-key="1" type="button" aria-label="one" aria-keyshortcuts="1">1</button>
-  <button class="btn" data-number data-key="2" type="button" aria-label="two" aria-keyshortcuts="2">2</button>
-  <button class="btn" data-number data-key="3" type="button" aria-label="three" aria-keyshortcuts="3">3</button>
-      <button class="btn" data-unary data-key="sqrt" type="button" aria-label="square root">√</button>
-      <button class="btn" data-unary data-key="ln" type="button" aria-label="natural logarithm">ln</button>
-  <button class="btn" data-dot type="button" aria-label="decimal" aria-keyshortcuts="," aria-description="Use comma or dot depending on your keyboard">.</button>
-  <button class="btn" data-number data-key="0" type="button" aria-label="zero" aria-keyshortcuts="0">0</button>
-      <button class="btn" data-unary data-key="invert" type="button" aria-label="invert sign">+/-</button>
-      <button class="btn span-2" data-equals type="button" aria-label="equals" aria-keyshortcuts="Enter =">=</button>
-    </div>
-  </div>
   </main>
   <script src="compiled/script.js" type="module"></script>
   <script src="compiled/keybinds.js" type="module"></script>

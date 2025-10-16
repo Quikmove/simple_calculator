@@ -17,7 +17,7 @@ export class InvalidOperationError extends Error {
 
 export class DivisionByZeroError extends Error {
   constructor() {
-    super("Division by zero");
+    super("Cannot divide by zero!");
     this.name = "DivisionByZeroError";
   }
 }

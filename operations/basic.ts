@@ -61,7 +61,14 @@ export class NaturalLogarithmOperation implements UnaryOperation {
     return Math.log(a);
   }
 }
-
+export class Log2Operation implements UnaryOperation {
+  execute(a: number): number {
+      if(a <=0) {
+        throw new InvalidOperationError("NaN");
+      }
+      return Math.log2(a);
+  }
+}
 export class ClearOperation implements UnaryOperation {
   execute(a: number): number {
     return 0;

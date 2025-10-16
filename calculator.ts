@@ -1,4 +1,4 @@
-import { OperationNotFoundError } from "./errors.js";
+import { InvalidOperationError, OperationNotFoundError } from "./errors.js";
 import {
   UnaryOperation,
   BinaryOperation,
@@ -10,6 +10,7 @@ export type CalcState = {
   prev: string;
   operator: string | null;
   waitingForNew: boolean;
+  error: string | null;
 };
 export type Action =
   | { type: "num"; key: string }
@@ -26,6 +27,7 @@ export class Calculator {
     prev: "",
     operator: null,
     waitingForNew: false,
+    error: null,
   };
   private readonly unary = new Map<string, UnaryOperation>();
   private readonly binary = new Map<string, BinaryOperation>();
@@ -52,66 +54,76 @@ export class Calculator {
     };
   }
   dispatch(action: Action): void {
-    switch (action.type) {
-      case "num": {
-        if (typeof action.key !== "string" || !/^[0-9]$/.test(action.key))
-          break;
-        if (this.state.waitingForNew || this.state.curr === "") {
-          this.state.curr = action.key;
-        } else {
-          this.state.curr =
-            this.state.curr === "0" ? action.key : this.state.curr + action.key;
-        }
-        this.state.waitingForNew = false;
-        break;
-      }
-      case "dot": {
-        if (this.state.waitingForNew || this.state.curr === "")
-          this.state.curr = "0.";
-        else if (!this.state.curr.includes(".")) this.state.curr += ".";
-        this.state.waitingForNew = false;
-        break;
-      }
-      case "clear": {
-        this.state = {
-          curr: "",
-          prev: "",
-          operator: null,
-          waitingForNew: false,
-        };
-        break;
-      }
-      case "delete": {
-        console.log();
-        if (this.state.curr !== "") {
-          this.state.curr = this.state.curr.slice(0, -1) || "";
-          if (this.state.curr === "") this.state.waitingForNew = true;
-        } else if (this.state.waitingForNew && this.state.prev !== "") {
-          this.state.curr = this.state.prev;
-          this.state.prev = "";
-          this.state.operator = null;
+    if(this.state.error !== null && action.type !== "clear") {
+      this.emit();
+      return;
+    }
+    try {
+      switch (action.type) {
+        case "num": {
+          if (typeof action.key !== "string" || !/^[0-9]$/.test(action.key))
+            break;
+          if (this.state.waitingForNew || this.state.curr === "") {
+            this.state.curr = action.key;
+          } else {
+            this.state.curr =
+              this.state.curr === "0"
+                ? action.key
+                : this.state.curr + action.key;
+          }
           this.state.waitingForNew = false;
+          break;
         }
-        break;
+        case "dot": {
+          if (this.state.waitingForNew || this.state.curr === "")
+            this.state.curr = "0.";
+          else if (!this.state.curr.includes(".")) this.state.curr += ".";
+          this.state.waitingForNew = false;
+          break;
+        }
+        case "clear": {
+          this.reset();
+          break;
+        }
+        case "delete": {
+          console.log();
+          if (this.state.curr !== "") {
+            this.state.curr = this.state.curr.slice(0, -1) || "";
+            if (this.state.curr === "") this.state.waitingForNew = true;
+          } else if (this.state.waitingForNew && this.state.prev !== "") {
+            this.state.curr = this.state.prev;
+            this.state.prev = "";
+            this.state.operator = null;
+            this.state.waitingForNew = false;
+          }
+          break;
+        }
+        case "unary": {
+          if (typeof action.key !== "string") return;
+          if (this.state.curr !== "" || this.state.prev !== "")
+            this.applyUnary(action.key);
+          break;
+        }
+        case "binary": {
+          if (typeof action.key !== "string") return;
+          if (
+            (this.state.curr !== "" && this.state.curr !== "-") ||
+            this.state.prev !== ""
+          )
+            this.setOperator(action.key);
+          break;
+        }
+        case "equals": {
+          this.calculate();
+          break;
+        }
       }
-      case "unary": {
-        if (typeof action.key !== "string") return;
-        if (this.state.curr !== "" || this.state.prev !== "")
-          this.applyUnary(action.key);
-        break;
-      }
-      case "binary": {
-        if (typeof action.key !== "string") return;
-        if (
-          (this.state.curr !== "" && this.state.curr !== "-") ||
-          this.state.prev !== ""
-        )
-          this.setOperator(action.key);
-        break;
-      }
-      case "equals": {
-        this.calculate();
-        break;
+    } catch (e: unknown) {
+      this.reset();
+      if (e && typeof e === "object" && "message" in e) {
+        this.state.error = String((e as Error).message);
+      } else {
+        this.state.error = "NaN";
       }
     }
     this.emit();
@@ -180,6 +192,7 @@ export class Calculator {
       prev: "",
       operator: null,
       waitingForNew: false,
+      error: null,
     };
   }
   private toFiniteNumber(x: unknown, label: string): number {
@@ -207,5 +220,14 @@ export class Calculator {
   private emit() {
     const s = this.getState();
     this.listeners.forEach((l) => l(s));
+  }
+  private reset() {
+    this.state = {
+      curr: "",
+      prev: "",
+      operator: null,
+      waitingForNew: true,
+      error: null,
+    };
   }
 }

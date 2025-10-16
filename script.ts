@@ -5,6 +5,7 @@ import {
   DivideOperation,
   MultiplyOperation,
   NaturalLogarithmOperation,
+  Log2Operation,
   RaiseToPowerOperation,
   SquareOperation,
   InvertSignOperation,
@@ -20,6 +21,7 @@ let binaryOps: BinaryRegistry = {
 };
 let unaryOps: UnaryRegistry = {
   ln: new NaturalLogarithmOperation(),
+  log2: new Log2Operation(),
   sqrt: new SquareRootOperation(),
   sqr: new SquareOperation(),
   invert: new InvertSignOperation(),
@@ -37,6 +39,11 @@ const currentOperand =
   document.querySelector<HTMLDivElement>(".current-operand")!;
 
 function updateDisplay(s: CalcState) {
+  if(s.error) {
+    previousOperand.innerText = "";
+    previousOperand.dataset.operator = "";
+    currentOperand.innerText = s.error;
+  } else
   if (s.prev) {
     previousOperand.innerText = s.prev;
     currentOperand.innerText = s.curr;
