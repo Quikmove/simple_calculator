@@ -6,6 +6,7 @@ function getSelector(k: string): string | null {
   }
   switch (k) {
     case ".":
+    case ",":
       selector = `button[data-dot]`;
       break;
     case "+":
