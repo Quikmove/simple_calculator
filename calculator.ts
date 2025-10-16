@@ -33,11 +33,11 @@ export class Calculator {
   constructor(deps: { unaryOps?: UnaryRegistry; binaryOps?: BinaryRegistry }) {
     if (deps.unaryOps)
       Object.entries(deps.unaryOps).forEach(([k, v]) =>
-        this.registerUnary(k, v),
+        this.registerUnary(k, v)
       );
     if (deps.binaryOps)
       Object.entries(deps.binaryOps).forEach(([k, v]) =>
-        this.registerBinary(k, v),
+        this.registerBinary(k, v)
       );
   }
   getState(): CalcState {
@@ -54,7 +54,7 @@ export class Calculator {
   dispatch(action: Action): void {
     switch (action.type) {
       case "num": {
-        if (typeof action.key !== "string" || isNaN(parseFloat(action.key)))
+        if (typeof action.key !== "string" || !/^[0-9]$/.test(action.key))
           break;
         if (this.state.waitingForNew || this.state.curr === "") {
           this.state.curr = action.key;
@@ -102,10 +102,7 @@ export class Calculator {
       }
       case "binary": {
         if (typeof action.key !== "string") return;
-        if (action.key === "subtract" && this.state.curr == "") {
-          this.state.curr = "-";
-          this.state.waitingForNew = false;
-        } else if (
+        if (
           (this.state.curr !== "" && this.state.curr !== "-") ||
           this.state.prev !== ""
         )
@@ -130,7 +127,7 @@ export class Calculator {
   private applyUnary(name: string) {
     const op = this.unary.get(name);
     if (!op) throw new OperationNotFoundError(name, 1);
-    const target = this.state.curr !== "" ? this.state.curr : this.state.prev;
+    const target = this.state.curr;
     if (target === "") return;
     const res = op.execute(this.toFiniteNumber(target, "a"));
     if (this.state.curr === "") this.state.prev = String(res);
@@ -197,12 +194,12 @@ export class Calculator {
       else n = Number(x);
     } else {
       throw new TypeError(
-        `Argument "${label}" must be a number or bigint, got ${typeof x}`,
+        `Argument "${label}" must be a number or bigint, got ${typeof x}`
       );
     }
     if (!Number.isFinite(n)) {
       throw new TypeError(
-        `Argument "${label}" must be a finite number, got ${x}`,
+        `Argument "${label}" must be a finite number, got ${x}`
       );
     }
     return n;
