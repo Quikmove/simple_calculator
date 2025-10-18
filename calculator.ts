@@ -210,7 +210,6 @@ export class Calculator {
         `Argument "${label}" must be a number or bigint, got ${typeof x}`
       );
     }
-    console.log(Number.isFinite(n));
     if (!Number.isFinite(n)) {
       throw new InfinityError();
     }
