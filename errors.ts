@@ -1,7 +1,7 @@
 export class OperationNotFoundError extends Error {
   constructor(
     public nameKey: string,
-    public arity: 1 | 2,
+    public arity: 1 | 2
   ) {
     super(`Operation "${nameKey}" with arity=${arity} not found`);
     this.name = "OperationNotFoundError";
@@ -21,7 +21,14 @@ export class DivisionByZeroError extends Error {
     this.name = "DivisionByZeroError";
   }
 }
+export class InfinityError extends Error {
+  constructor(msg?: string) {
+    if (msg) super(msg);
+    else super("Infinity");
 
+    this.name = "InfinityError";
+  }
+}
 export class OutOfBoundsError extends Error {
   constructor() {
     super("Out of bounds");

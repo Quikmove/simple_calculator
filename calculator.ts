@@ -1,4 +1,4 @@
-import { InvalidOperationError, OperationNotFoundError } from "./errors.js";
+import { InfinityError, OperationNotFoundError } from "./errors.js";
 import {
   UnaryOperation,
   BinaryOperation,
@@ -186,7 +186,7 @@ export class Calculator {
     if (!op) throw new OperationNotFoundError(this.state.operator, 2);
     const a = this.toFiniteNumber(this.state.prev, "a");
     const b = this.toFiniteNumber(this.state.curr, "b");
-    const res = op.execute(a, b);
+    const res = this.toFiniteNumber(op.execute(a, b), "Result");
     this.state = {
       curr: String(res),
       prev: "",
@@ -210,10 +210,9 @@ export class Calculator {
         `Argument "${label}" must be a number or bigint, got ${typeof x}`
       );
     }
+    console.log(Number.isFinite(n));
     if (!Number.isFinite(n)) {
-      throw new TypeError(
-        `Argument "${label}" must be a finite number, got ${x}`
-      );
+      throw new InfinityError();
     }
     return n;
   }
